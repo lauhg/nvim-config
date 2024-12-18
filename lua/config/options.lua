@@ -4,4 +4,4 @@
 vim.g.ai_cmp = false
 vim.g.snacks_animate = false
 vim.diagnostic.disable()
-
+vim.opt.list = false
