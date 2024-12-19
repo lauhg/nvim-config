@@ -3,10 +3,28 @@ return {
     "akinsho/bufferline.nvim",
     opts = {
       options = {
-        always_show_bufferline = true,
+        always_show_bufferline = false,
       },
     },
   },
+  {
+    "folke/which-key.nvim",
+    opts = {
+      delay = 300,
+    },
+  },
+  -- {
+  --   "echasnovski/mini.comment",
+  --   dependencies = {
+  --     "JoosepAlviste/nvim-ts-context-commentstring",
+  --   },
+  --   keys = {
+  --     "gcc",
+  --     "gc",
+  --     { "<c-_>", "gcc", mode = "n", remap = true },
+  --     { "<c-_>", "gc", mode = "v", remap = true },
+  --   },
+  -- },
   {
     "saghen/blink.cmp",
     opts = {
@@ -26,6 +44,11 @@ return {
           prefetch_on_insert = false,
           show_on_insert_on_trigger_character = false,
         },
+        accept = {
+          auto_brackets = {
+            enabled = false,
+          },
+        },
       },
     },
   },
@@ -44,6 +67,9 @@ return {
   },
   {
     "ibhagwan/fzf-lua",
+    opts = {
+      fzf_opts = { ["--cycle"] = true },
+    },
     keys = {
       { "<c-j>", "<enter>", ft = "fzf", mode = "t", nowait = true },
     },

@@ -13,4 +13,16 @@ map("n", "<c-a>", "^", { desc = "Move to Line Beginning" })
 map("n", "-", "$", { desc = "Move to Line End" })
 map("n", "ge", "G", { desc = "Move to Page End" })
 
-map("n", "<leader>r", "<cmd>split | term python3 %<cr>", { desc = "Run Python File", nowait = true })
+map("n", "<leader>r", "<cmd>w | split | term python3 %<cr>", { desc = "Run Python File", nowait = true })
+map({ "n", "i" }, "<m-r>", "<cmd>w | split | term python3 %<cr>", { desc = "Run Python File", nowait = true })
+
+map("n", "<c-tab>", "<cmd>e #<cr>", { desc = "Other Buffer" })
+
+-- comment
+map("n", "<m-/>", "gcc", { desc = "Comment", remap = true })
+map("v", "<m-/>", "gc", { desc = "Comment", remap = true })
+map("i", "<m-/>", "<c-o>gcc", { desc = "Comment", remap = true })
+
+-- undo
+map("n", "<c-_>", "u", { desc = "Undo" })
+map("i", "<c-_>", "<c-o>u", { desc = "Undo" })
