@@ -31,6 +31,8 @@ return {
       keymap = {
         preset = "super-tab",
         ["<esc>"] = { "hide", "fallback" },
+        ["<enter>"] = { "select_and_accept", "fallback" },
+        ["<c-y>"] = { "fallback" },
       },
       -- sources = {
       --   default = { "lsp", "path", "buffer" },
@@ -74,10 +76,28 @@ return {
       { "<c-j>", "<enter>", ft = "fzf", mode = "t", nowait = true },
     },
   },
+  {
+    "ahmedkhalf/project.nvim",
+    opts = {
+      manual_mode = false,
+    },
+  },
   -- noice 配置必须在最后，否在不生效
   {
     "folke/noice.nvim",
     opts = {
+      -- messages = {
+      --   enabled = false,
+      -- },
+      -- popupmenu = {
+      --   enabled = false,
+      -- },
+      -- notify = {
+      --   enabled = false,
+      -- },
+      -- cmdline = {
+      --   enabled = false,
+      -- },
       lsp = {
         signature = {
           auto_open = {

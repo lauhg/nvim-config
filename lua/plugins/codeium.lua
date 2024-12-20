@@ -3,7 +3,7 @@ if false then
 end
 
 return {
-  "Exafunction/codeium.nvim",
+  "lauhg/codeium.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "hrsh7th/nvim-cmp",

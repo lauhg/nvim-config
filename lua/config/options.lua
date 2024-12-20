@@ -3,11 +3,13 @@
 -- Add any additional options here
 vim.g.ai_cmp = false
 vim.g.snacks_animate = false
--- vim.diagnostic.disable()
+vim.diagnostic.disable()
+-- vim.diagnostic.config({ virtual_text = false })
 vim.opt.list = false
+vim.opt.formatoptions = "jcqlnt"
 
 if vim.g.neovide then
-  vim.opt.guifont = "Source Code Pro:h14"
+  vim.opt.guifont = "Source Code Pro:h13"
 
   vim.g.neovide_position_animation_length = 0
   vim.g.neovide_cursor_animation_length = 0.00
