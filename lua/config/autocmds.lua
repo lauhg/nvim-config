@@ -10,7 +10,7 @@
 vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
   callback = function()
-    vim.cmd("set ft=terminal")
+    vim.cmd("set ft=help")
   end,
 })
 

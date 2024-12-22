@@ -1,4 +1,5 @@
 return {
+  { "andymass/vim-matchup" },
   {
     "akinsho/bufferline.nvim",
     opts = {
@@ -32,7 +33,7 @@ return {
         preset = "super-tab",
         ["<esc>"] = { "hide", "fallback" },
         ["<enter>"] = { "select_and_accept", "fallback" },
-        ["<c-y>"] = { "fallback" },
+        ["<C-y>"] = { "fallback" },
       },
       -- sources = {
       --   default = { "lsp", "path", "buffer" },
@@ -71,6 +72,11 @@ return {
     "ibhagwan/fzf-lua",
     opts = {
       fzf_opts = { ["--cycle"] = true },
+      winopts = {
+        preview = {
+          layout = "vertical",
+        },
+      },
     },
     keys = {
       { "<c-j>", "<enter>", ft = "fzf", mode = "t", nowait = true },
@@ -86,9 +92,28 @@ return {
   {
     "folke/noice.nvim",
     opts = {
+      routes = {
+        {
+          filter = {
+            any = {
+              { event = "msg_show", find = "lines" },
+              { event = "msg_show", find = "changes" },
+              { event = "msg_show", find = "change" },
+              { event = "msg_show", find = '"[^"]+" %d+L, %d+B' },
+              { warning = true, find = "swapfile" },
+            },
+          },
+          opts = { skip = true },
+        },
+      },
+
       -- messages = {
-      --   enabled = false,
+      -- enabled = false,
+      -- view = "notify_send",
+      -- enabled = true,
+      -- view = "mini",
       -- },
+
       -- popupmenu = {
       --   enabled = false,
       -- },
