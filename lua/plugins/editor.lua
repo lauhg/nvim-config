@@ -1,7 +1,7 @@
 return {
   { "andymass/vim-matchup" },
   {
-    "akinsho/bufferline.nvim",
+    "lauhg/bufferline.nvim",
     opts = {
       options = {
         always_show_bufferline = false,
@@ -80,6 +80,16 @@ return {
     },
     keys = {
       { "<c-j>", "<enter>", ft = "fzf", mode = "t", nowait = true },
+      {
+        "<c-y>",
+        function()
+          local clipboard = vim.fn.getreg("+")
+          vim.fn.feedkeys(clipboard, "n")
+        end,
+        ft = "fzf",
+        mode = "t",
+        nowait = true,
+      },
     },
   },
   {
@@ -97,6 +107,7 @@ return {
           filter = {
             any = {
               { event = "msg_show", find = "lines" },
+              { event = "msg_show", find = "line less" },
               { event = "msg_show", find = "changes" },
               { event = "msg_show", find = "change" },
               { event = "msg_show", find = '"[^"]+" %d+L, %d+B' },

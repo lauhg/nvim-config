@@ -2,7 +2,15 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+vim.api.nvim_create_user_command("W", function()
+  if vim.bo.modified then
+    vim.cmd("w")
+  end
+end, {})
+
 local map = vim.keymap.set
+map("i", "<m-f>", "<c-right>", { desc = "Move Word Right" })
+map("i", "<m-b>", "<c-left>", { desc = "Move Word Left" })
 map("i", "<c-f>", "<right>", { desc = "Right" })
 map("i", "<c-b>", "<left>", { desc = "Left" })
 map("i", "<c-a>", "<c-o>^", { desc = "Home", silent = true })
@@ -14,19 +22,24 @@ map("n", "<c-a>", "^", { desc = "Move to Line Beginning" })
 map("n", "-", "$", { desc = "Move to Line End" })
 map("n", "ge", "G", { desc = "Move to Page End" })
 
-map("n", "<leader>r", function()
+local function run_python_file()
   local filename = vim.fn.expand("%:p")
-  vim.schedule(function()
-    local python_path = require("config.util").get_python_path()
+  local python_path = require("config.util").get_python_path()
+  if vim.bo.modified then
     vim.cmd(string.format("w | split | term %s %s", python_path, filename))
+  else
+    vim.cmd(string.format("split | term %s %s", python_path, filename))
+  end
+end
+map("n", "<leader>r", function()
+  vim.schedule(function()
+    run_python_file()
   end)
 end, { desc = "Run Python File", expr = true, nowait = true })
 
 map({ "n", "i" }, "<m-r>", function()
-  local filename = vim.fn.expand("%:p")
   vim.schedule(function()
-    local python_path = require("config.util").get_python_path()
-    vim.cmd(string.format("w | split | term %s %s", python_path, filename))
+    run_python_file()
   end)
 end, { desc = "Run Python File", expr = true, nowait = true })
 
@@ -48,8 +61,10 @@ map("i", "<c-_>", "<c-o>u", { desc = "Undo" })
 map("i", "<c-/>", "<c-o>u", { desc = "Undo" })
 
 -- save
-map({ "i", "n", "v" }, "<m-s>", "<cmd>w<cr><esc>", { desc = "Save" })
 map({ "i", "n", "v" }, "<c-s>", "<esc>", { desc = "Escape", remap = true })
+-- map({ "i", "n", "v" }, "<m-s>", "<cmd>w<cr><esc>", { desc = "Save", noremap = true })
+
+map({ "i", "n", "v" }, "<m-s>", "<cmd>W<cr><esc>", { desc = "Save", noremap = true, silent = true })
 
 -- paste
 map("i", "<c-y>", "<c-r>+", { desc = "Paste" })
@@ -67,17 +82,17 @@ map("v", "<s-tab>", "<gv", { desc = "Dedent", noremap = true, silent = true })
 
 local scroll_state = 0
 local scroll_timer = vim.loop.new_timer()
-map("n", "<C-l>", function()
+map({ "n", "i" }, "<C-l>", function()
   vim.schedule(function()
     scroll_timer:stop()
     scroll_timer:start(0, 3000, function()
       scroll_state = 0
     end)
     if scroll_state == 0 then
-      vim.cmd("normal! zt")
+      vim.cmd("normal! zz")
       scroll_state = 1
     elseif scroll_state == 1 then
-      vim.cmd("normal! zz")
+      vim.cmd("normal! zt")
       scroll_state = 2
     else
       vim.cmd("normal! zb")
