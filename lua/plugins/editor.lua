@@ -1,6 +1,14 @@
 return {
   { "andymass/vim-matchup" },
   {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      window = {
+        width = 32,
+      },
+    },
+  },
+  {
     "lauhg/bufferline.nvim",
     opts = {
       options = {
@@ -96,6 +104,16 @@ return {
     "ahmedkhalf/project.nvim",
     opts = {
       manual_mode = false,
+    },
+  },
+  {
+    "folke/flash.nvim",
+    opts = {
+      modes = {
+        char = {
+          enabled = false,
+        },
+      },
     },
   },
   -- noice 配置必须在最后，否在不生效

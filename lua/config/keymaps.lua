@@ -31,11 +31,34 @@ local function run_python_file()
     vim.cmd(string.format("split | term %s %s", python_path, filename))
   end
 end
+
+local function make()
+  if vim.bo.modified then
+    vim.cmd(string.format("w | split | term make"))
+  else
+    vim.cmd(string.format("split | term make"))
+  end
+end
+
 map("n", "<leader>r", function()
   vim.schedule(function()
     run_python_file()
   end)
 end, { desc = "Run Python File", expr = true, nowait = true })
+
+-- `,`
+map("n", ",,", function()
+  vim.schedule(function()
+    if vim.bo.filetype == "python" then
+      run_python_file()
+    else
+      make()
+    end
+  end)
+end, { desc = "Run Python File", expr = true, nowait = true })
+map("n", ",f", "<leader>ff", { desc = "Find Root Files", silent = true, remap = true })
+map("n", ",r", "<leader>fr", { desc = "Find Recent Files", silent = true, remap = true })
+map("n", ",b", "<leader>fb", { desc = "Find Buffers", silent = true, remap = true })
 
 map({ "n", "i" }, "<m-r>", function()
   vim.schedule(function()

@@ -14,7 +14,7 @@ vim.opt.formatoptions = "jcqlnt"
 vim.opt.showcmd = false
 
 if vim.g.neovide then
-  vim.opt.guifont = "Source Code Pro:h13.5"
+  -- vim.opt.guifont = "Source Code Pro:h15"
 
   vim.g.neovide_position_animation_length = 0
   vim.g.neovide_cursor_animation_length = 0.00
