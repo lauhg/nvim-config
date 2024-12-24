@@ -22,20 +22,8 @@ return {
       delay = 300,
     },
   },
-  -- {
-  --   "echasnovski/mini.comment",
-  --   dependencies = {
-  --     "JoosepAlviste/nvim-ts-context-commentstring",
-  --   },
-  --   keys = {
-  --     "gcc",
-  --     "gc",
-  --     { "<c-_>", "gcc", mode = "n", remap = true },
-  --     { "<c-_>", "gc", mode = "v", remap = true },
-  --   },
-  -- },
   {
-    "saghen/blink.cmp",
+    "lauhg/blink.cmp",
     opts = {
       keymap = {
         preset = "super-tab",
@@ -47,6 +35,7 @@ return {
       --   default = { "lsp", "path", "buffer" },
       -- },
       --
+
       completion = {
         documentation = {
           auto_show = false,
