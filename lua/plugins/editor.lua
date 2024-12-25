@@ -4,7 +4,7 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
       window = {
-        width = 32,
+        width = 40,
       },
     },
   },
@@ -63,6 +63,8 @@ return {
     opts = function()
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
       keys[#keys + 1] = { "<c-k>", false, mode = "i" }
+      keys[#keys + 1] = { "<a-n>", false }
+      keys[#keys + 1] = { "<a-p>", false }
     end,
   },
   {
@@ -115,10 +117,14 @@ return {
             any = {
               { event = "msg_show", find = "lines" },
               { event = "msg_show", find = "line less" },
+              { event = "msg_show", find = "more line" },
               { event = "msg_show", find = "changes" },
               { event = "msg_show", find = "change" },
+              { event = "msg_show", find = "codeium" },
               { event = "msg_show", find = '"[^"]+" %d+L, %d+B' },
+              { event = "notify", find = "Ignoring" },
               { warning = true, find = "swapfile" },
+              { error = true, find = "request failed" },
             },
           },
           opts = { skip = true },
