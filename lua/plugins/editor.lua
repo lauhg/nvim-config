@@ -89,6 +89,14 @@ return {
         mode = "t",
         nowait = true,
       },
+      {
+        "<leader><space>",
+        function()
+          local cwd = vim.fn.expand("%:p:h")
+          require("fzf-lua").files({ cwd = cwd })
+        end,
+        desc = "Find CWD Files",
+      },
     },
   },
   {
