@@ -56,3 +56,15 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 --     vim.diagnostic.open_float(nil, { focus = false })
 --   end,
 -- })
+
+-- vim.lsp.handlers["window/logMessage"] = function(err, result, ctx)
+--   print("err", err)
+--   print("result", result)
+--   print("ctx", ctx)
+-- end
+--
+-- vim.lsp.handlers["window/showMessage"] = function(err, result, ctx)
+--   print("err", err)
+--   print("result", result)
+--   print("ctx", ctx)
+-- end
