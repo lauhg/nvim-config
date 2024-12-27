@@ -89,14 +89,14 @@ return {
         mode = "t",
         nowait = true,
       },
-      {
-        "<leader><space>",
-        function()
-          local cwd = vim.fn.expand("%:p:h")
-          require("fzf-lua").files({ cwd = cwd })
-        end,
-        desc = "Find CWD Files",
-      },
+      -- {
+      --   "<leader><space>",
+      --   function()
+      --     local cwd = vim.fn.expand("%:p:h")
+      --     require("fzf-lua").files({ cwd = cwd })
+      --   end,
+      --   desc = "Find CWD Files",
+      -- },
     },
   },
   {
@@ -156,6 +156,10 @@ return {
       --   enabled = false,
       -- },
       lsp = {
+        progress = {
+          -- 关闭 lsp 进度提示
+          enabled = false,
+        },
         signature = {
           auto_open = {
             enabled = false,
