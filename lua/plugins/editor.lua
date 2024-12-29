@@ -59,6 +59,14 @@ return {
     },
   },
   {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      highlight = {
+        disable = { "ocaml" },
+      },
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
     opts = function()
       local keys = require("lazyvim.plugins.lsp.keymaps").get()

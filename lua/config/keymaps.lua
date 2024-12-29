@@ -127,7 +127,7 @@ local scroll_timer = vim.loop.new_timer()
 map({ "n", "i" }, "<C-l>", function()
   vim.schedule(function()
     scroll_timer:stop()
-    scroll_timer:start(0, 3000, function()
+    scroll_timer:start(0, 2000, function()
       scroll_state = 0
     end)
     if scroll_state == 0 then
