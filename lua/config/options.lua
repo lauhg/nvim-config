@@ -9,7 +9,6 @@ vim.diagnostic.disable()
 
 -- 不显示空白等特殊字符
 vim.opt.list = false
-vim.opt.formatoptions = "jcqlnt"
 -- 不在 status bar 显示 pressed key
 vim.opt.showcmd = false
 

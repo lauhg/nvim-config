@@ -13,6 +13,9 @@ return {
       enable_cmp_source = false,
       virtual_text = {
         enabled = true,
+        filetypes = {
+          asm = false,
+        },
         key_bindings = {
           clear = "<c-c>",
         },

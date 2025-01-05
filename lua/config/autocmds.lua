@@ -21,6 +21,13 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = "*",
+  callback = function()
+    vim.opt.formatoptions = "jcqlnt"
+  end,
+})
+
 -- vim.api.nvim_create_autocmd({ "FileType" }, {
 --   pattern = { "python" },
 --   callback = function()
