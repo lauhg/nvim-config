@@ -141,6 +141,7 @@ return {
               { event = "msg_show", find = "codeium" },
               { event = "msg_show", find = '"[^"]+" %d+L, %d+B' },
               { event = "notify", find = "Ignoring" },
+              { event = "notify", find = "No information" },
               { warning = true, find = "swapfile" },
               { error = true, find = "request failed" },
             },
