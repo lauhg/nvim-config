@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = "*",
   callback = function()
-    vim.opt.formatoptions = "jcqlnt"
+    vim.opt.formatoptions = "jcqlnt2"
   end,
 })
 

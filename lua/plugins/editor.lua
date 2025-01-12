@@ -64,6 +64,23 @@ return {
       highlight = {
         disable = { "ocaml" },
       },
+      textobjects = {
+        select = {
+          enable = true,
+          keymaps = {
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
+            ["ic"] = "@class.inner",
+          },
+          selection_modes = {
+            ["@function.outer"] = "V",
+            ["@function.inner"] = "V",
+            ["@class.outer"] = "V",
+            ["@class.inner"] = "V",
+          },
+        },
+      },
     },
   },
   {

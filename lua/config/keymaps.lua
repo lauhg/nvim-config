@@ -23,6 +23,7 @@ map("n", "ge", "G", { desc = "Move to Page End" })
 map("n", "<m-n>", "*", { desc = "Find Next" })
 map("n", "<m-p>", "#", { desc = "Find Previous" })
 map("v", "p", '"0p', { desc = "Paste", noremap = true })
+map("n", "q", "<Nop>", { noremap = true, silent = true })
 
 local function run_python_file()
   local filename = vim.fn.expand("%:p")
