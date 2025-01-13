@@ -22,6 +22,13 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "ocaml" },
+  callback = function()
+    vim.bo.indentkeys = "0{,0},0),0],:,0#,!^F,o,O,e"
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = "*",
   callback = function()
     vim.opt.formatoptions = "jcqlnt2"

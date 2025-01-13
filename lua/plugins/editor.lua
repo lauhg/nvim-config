@@ -62,7 +62,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       highlight = {
-        disable = { "ocaml" },
+        -- disable = { "ocaml" },
       },
       textobjects = {
         select = {
@@ -139,6 +139,17 @@ return {
         char = {
           enabled = false,
         },
+      },
+    },
+    keys = {
+      { "s", "<Nop>" },
+      {
+        "f",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+        desc = "Flash",
       },
     },
   },
