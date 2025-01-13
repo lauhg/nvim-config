@@ -5,6 +5,7 @@ return {
       style = "light",
       highlights = {
         MatchParen = { bg = "#dcdcdc" },
+        ["@constructor"] = { fg = "#986801", fmt = "none" },
       },
       -- colors = {
       --   fg = "#555555",
