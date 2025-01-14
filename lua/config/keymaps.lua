@@ -122,6 +122,30 @@ map("v", "<tab>", ">gv", { desc = "Indent", noremap = true, silent = true })
 map("n", "<s-tab>", "<<b", { desc = "Dedent", noremap = true, silent = true })
 map("v", "<s-tab>", "<gv", { desc = "Dedent", noremap = true, silent = true })
 
+local function trim(s)
+  return s:match("^%s*(.-)%s*$")
+end
+
+local function leading_spaces_count(s)
+  local spaces = s:match("^%s*")
+  return #spaces
+end
+
+-- local function smart_indent()
+--   local get_indent = require("nvim-treesitter.indent").get_indent
+--   local cursor = vim.api.nvim_win_get_cursor(0)
+--   local lnum = cursor[1]
+--   local col = cursor[2]
+--   local indent = get_indent(lnum)
+--   print("line_num: " .. lnum .. " indent: " .. indent)
+--   local line = vim.api.nvim_get_current_line()
+--   local old_indent = leading_spaces_count(line)
+--   local newline = string.rep(" ", indent) .. trim(line)
+--   vim.api.nvim_set_current_line(newline)
+--   vim.api.nvim_win_set_cursor(0, { lnum, col + indent - old_indent })
+-- end
+-- map({ "n" }, "<tab>", smart_indent, { noremap = true, silent = true })
+
 local scroll_state = 0
 local scroll_timer = vim.loop.new_timer()
 map({ "n", "i" }, "<C-l>", function()
