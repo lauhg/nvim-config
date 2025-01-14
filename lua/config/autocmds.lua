@@ -70,3 +70,46 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 --     vim.diagnostic.open_float(nil, { focus = false })
 --   end,
 -- })
+
+local function trim(s)
+  return s:match("^%s*(.-)%s*$")
+end
+
+local function leading_spaces_count(s)
+  local spaces = s:match("^%s*")
+  return #spaces
+end
+
+local function most_right_word(s)
+  local last_word = s:match("%S+$")
+  return last_word or ""
+end
+
+local function get_line(lnum)
+  local line_num = lnum
+  if line_num > 1 then
+    return vim.api.nvim_buf_get_lines(0, line_num - 2, line_num - 1, false)[1]
+  else
+    return nil
+  end
+end
+
+local function smart_indent_ocaml()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  local lnum = cursor[1]
+  local col = cursor[2]
+
+  local indent_end_keywords = {
+    "in",
+    "=",
+    "->",
+  }
+
+  print("line_num: " .. lnum .. " indent: " .. indent)
+  local line = vim.api.nvim_get_current_line()
+  local old_indent = leading_spaces_count(line)
+  local trimmed_line = trim(line)
+  local newline = string.rep(" ", indent) .. trim(line)
+  vim.api.nvim_set_current_line(newline)
+  vim.api.nvim_win_set_cursor(0, { lnum, col + indent - old_indent })
+end
