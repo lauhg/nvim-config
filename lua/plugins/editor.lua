@@ -145,7 +145,7 @@ return {
       { "s", "<Nop>" },
       {
         "f",
-        mode = { "n", "x", "o" },
+        mode = { "n" },
         function()
           require("flash").jump()
         end,
@@ -153,6 +153,29 @@ return {
       },
     },
   },
+
+  {
+    "gbprod/yanky.nvim",
+    event = "VeryLazy",
+    opts = {
+      highlight = { timer = 150 },
+    },
+    keys = {
+      {
+        "<leader>p",
+        function()
+          vim.cmd([[YankyRingHistory]])
+        end,
+        mode = { "n", "x" },
+        desc = "Open Yank History",
+      },
+
+      { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank Text" },
+      -- { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put Text After Cursor" },
+      -- { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put Text Before Cursor" },
+    },
+  },
+
   -- noice 配置必须在最后，否在不生效
   {
     "folke/noice.nvim",

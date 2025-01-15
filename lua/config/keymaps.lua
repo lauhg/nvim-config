@@ -9,13 +9,14 @@ vim.api.nvim_create_user_command("W", function()
 end, {})
 
 local map = vim.keymap.set
-map("i", "<m-f>", "<c-right>", { desc = "Move Word Right" })
-map("i", "<m-b>", "<c-left>", { desc = "Move Word Left" })
-map("i", "<c-f>", "<right>", { desc = "Right" })
-map("i", "<c-b>", "<left>", { desc = "Left" })
+map({ "i", "c" }, "<m-f>", "<c-right>", { desc = "Move Word Right" })
+map({ "i", "c" }, "<m-b>", "<c-left>", { desc = "Move Word Left" })
+map({ "i", "c" }, "<c-f>", "<right>", { desc = "Right" })
+map({ "i", "c" }, "<c-b>", "<left>", { desc = "Left" })
 map("i", "<c-a>", "<c-o>^", { desc = "Home", silent = true })
+map("c", "<c-a>", "<home>", { desc = "Home" })
 map("i", "<c-e>", "<end>", { desc = "End" })
-map("i", "<c-d>", "<delete>", { desc = "Delete Right Char" })
+map({ "i", "c" }, "<c-d>", "<delete>", { desc = "Delete Right Char" })
 map({ "n", "v" }, "<c-a-m>", "%", { desc = "Match", remap = true })
 map("n", "<c-a>", "^", { desc = "Move to Line Beginning" })
 map("n", "-", "$", { desc = "Move to Line End" })
@@ -23,7 +24,7 @@ map("n", "ge", "G", { desc = "Move to Page End" })
 map("n", "<m-n>", "*", { desc = "Find Next" })
 map("n", "<m-p>", "#", { desc = "Find Previous" })
 map("v", "p", '"0p', { desc = "Paste", noremap = true })
-map("n", "q", "<Nop>", { noremap = true, silent = true })
+map("n", "q", "<Nop>", { noremap = true })
 
 local function run_python_file()
   local filename = vim.fn.expand("%:p")
@@ -70,7 +71,7 @@ map({ "n", "v" }, ",l", "]M", { desc = "Goto Function End", silent = true, remap
 map({ "n", "v" }, ",H", "[c", { desc = "Goto Class Start", silent = true, remap = true })
 map({ "n", "v" }, ",L", "]C", { desc = "Goto Class End", silent = true, remap = true })
 map({ "n", "v" }, "<leader>o", "<leader>ss", { desc = "Goto Symbol", silent = true, remap = true })
-map({ "n", "v" }, "<leader><space>", "<leader>fb", { desc = "Find Buffers", silent = true, remap = true })
+-- map({ "n", "v" }, "<leader><space>", "<leader>fb", { desc = "Find Buffers", silent = true, remap = true })
 
 map({ "n", "i" }, "<m-r>", function()
   vim.schedule(function()
@@ -89,16 +90,12 @@ map("v", "<m-/>", "gc", { desc = "Comment", remap = true })
 map("i", "<m-/>", "<c-o>gcc", { desc = "Comment", remap = true })
 
 -- undo
--- terminal 要用 <c-_>
--- map("n", "<c-_>", "u", { desc = "Undo" })
--- map("i", "<c-_>", "<c-o>u", { desc = "Undo" })
--- map("n", "<c-/>", "u", { desc = "Undo" })
--- map("i", "<c-/>", "<c-o>u", { desc = "Undo" })
 local function undo()
   vim.schedule(function()
     vim.cmd("undo")
   end)
 end
+-- terminal 要用 <c-_>
 map("i", "<c-_>", undo, { desc = "Undo", expr = true, silent = true })
 map("i", "<c-/>", undo, { desc = "Undo", expr = true, silent = true })
 
@@ -109,7 +106,25 @@ map({ "i", "n", "v" }, "<c-s>", "<esc>", { desc = "Escape", remap = true })
 map({ "i", "n", "v" }, "<m-s>", "<cmd>W<cr><esc>", { desc = "Save", noremap = true, silent = true })
 
 -- paste
-map("i", "<c-y>", "<c-r>+", { desc = "Paste" })
+local function smart_paste()
+  local clipboard_content = vim.fn.getreg("+")
+
+  local lines = vim.split(clipboard_content, "\n")
+  local indent = vim.fn.indent(vim.fn.line("."))
+  for i, line in ipairs(lines) do
+    if i > 1 then
+      lines[i] = string.rep(" ", indent) .. line
+    end
+  end
+  local adjusted_text = table.concat(lines, "\n")
+
+  vim.schedule(function()
+    vim.api.nvim_paste(adjusted_text, false, -1)
+  end)
+end
+
+map({ "i", "c" }, "<c-y>", smart_paste, { desc = "Paste", expr = true, silent = true })
+-- map("i", "<c-y>", "<c-r>+", { desc = "Paste" })
 
 -- fold
 map("n", "zl", "<cmd>%foldc<cr>", { desc = "fold all toplevels", silent = true })
@@ -242,3 +257,4 @@ local function delete_word_forward()
   end)
 end
 map("i", "<m-d>", delete_word_forward, { desc = "Delete Word Forward", expr = true, silent = true })
+map("c", "<m-d>", "<c-right><c-w>", { desc = "Delete Word Forward" })
