@@ -45,7 +45,7 @@ local function smart_indent(indent_end_keywords, dedent_start_keywords, pairs)
   local last_token = get_last_token(trimmed_line)
 
   local old_indent = leading_spaces_count(line)
-  local new_indent = old_indent
+  local new_indent = prev_line_indent
 
   if vim.tbl_contains(indent_end_keywords, last_token) then
     if pairs[last_token] and vim.trim(line):sub(-1) == pairs[last_token] then
@@ -58,6 +58,18 @@ local function smart_indent(indent_end_keywords, dedent_start_keywords, pairs)
       new_indent = prev_line_indent - indent_size
     end
   end
+
+  -- print(
+  --   string.format(
+  --     "line=(%s) prev_line=(%s) prev_line_indent=(%s) old_indent=(%s) new_indent=(%s) last_token=(%s)",
+  --     line,
+  --     prev_line,
+  --     prev_line_indent,
+  --     old_indent,
+  --     new_indent,
+  --     last_token
+  --   )
+  -- )
 
   return new_indent
 end
