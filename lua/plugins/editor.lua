@@ -103,6 +103,10 @@ return {
           layout = "vertical",
         },
       },
+      files = {
+        -- cmd = "fd --color=never --type f --hidden --follow --exclude .git --exec stat --format '%X %n' | sort -nr | cut -d' ' -f2-",
+        -- cmd = "git ls-files",
+      },
     },
     keys = {
       { "<c-j>", "<enter>", ft = "fzf", mode = "t", nowait = true },

@@ -1,13 +1,27 @@
-local function print_table(tbl)
-  for k, v in pairs(tbl) do
-    if type(v) == "table" then
-      print(k .. " = {")
-      print_table(v)
-      print("}")
-    else
-      print(k .. " = " .. tostring(v))
+local function print_table(tbl, opts)
+  local opts = opts or {}
+  local indent_level = opts.indent_level or 0
+  local indent_size = opts.indent_size or 2
+
+  local spaces = function(indent_level)
+    return string.rep(" ", indent_level * indent_size)
+  end
+
+  local function pp(tbl, indent_level)
+    for k, v in pairs(tbl) do
+      if type(v) == "table" then
+        print(spaces(indent_level) .. k .. " = {")
+        pp(v, indent_level + 1)
+        print(spaces(indent_level) .. "}")
+      else
+        print(spaces(indent_level) .. k .. " = " .. tostring(v))
+      end
     end
   end
+
+  print(spaces(indent_level) .. "{")
+  pp(tbl, indent_level + 1)
+  print(spaces(indent_level) .. "}")
 end
 
 local function get_root_dir(filepath)

@@ -28,7 +28,7 @@ map("n", "q", "<Nop>", { noremap = true })
 
 local function run_python_file()
   local filename = vim.fn.expand("%:p")
-  local python_path = require("config.util").get_python_path()
+  local python_path = require("utils.common").get_python_path()
   if vim.bo.modified then
     vim.cmd(string.format("w | split | term %s %s", python_path, filename))
   else
@@ -137,30 +137,6 @@ map("v", "<tab>", ">gv", { desc = "Indent", noremap = true, silent = true })
 map("n", "<s-tab>", "<<b", { desc = "Dedent", noremap = true, silent = true })
 map("v", "<s-tab>", "<gv", { desc = "Dedent", noremap = true, silent = true })
 
-local function trim(s)
-  return s:match("^%s*(.-)%s*$")
-end
-
-local function leading_spaces_count(s)
-  local spaces = s:match("^%s*")
-  return #spaces
-end
-
--- local function smart_indent()
---   local get_indent = require("nvim-treesitter.indent").get_indent
---   local cursor = vim.api.nvim_win_get_cursor(0)
---   local lnum = cursor[1]
---   local col = cursor[2]
---   local indent = get_indent(lnum)
---   print("line_num: " .. lnum .. " indent: " .. indent)
---   local line = vim.api.nvim_get_current_line()
---   local old_indent = leading_spaces_count(line)
---   local newline = string.rep(" ", indent) .. trim(line)
---   vim.api.nvim_set_current_line(newline)
---   vim.api.nvim_win_set_cursor(0, { lnum, col + indent - old_indent })
--- end
--- map({ "n" }, "<tab>", smart_indent, { noremap = true, silent = true })
-
 local scroll_state = 0
 local scroll_timer = vim.loop.new_timer()
 map({ "n", "i" }, "<C-l>", function()
@@ -258,3 +234,55 @@ local function delete_word_forward()
 end
 map("i", "<m-d>", delete_word_forward, { desc = "Delete Word Forward", expr = true, silent = true })
 map("c", "<m-d>", "<c-right><c-w>", { desc = "Delete Word Forward" })
+
+-- find files
+local function smart_files()
+  local files = {
+    "lua/config/keymaps.lua",
+  }
+  vim.schedule(function()
+    require("fzf-lua").fzf_exec(files, {
+      prompt = "Files> ",
+      previewer = "builtin",
+    })
+  end)
+end
+
+local function smart_files2()
+  -- print("smart_files2")
+  vim.schedule(function()
+    require("fzf-lua").fzf_exec(function(fzf_cb)
+      -- print("fzf_cb", fzf_cb)
+      for i = 1, 100 do
+        fzf_cb(i)
+      end
+      fzf_cb() -- EOF
+    end, {
+      prompt = "Files> ",
+      previewer = "builtin",
+      -- debug = true,
+    })
+
+    -- require("fzf-lua").fzf_exec(function(fzf_cb)
+    --   coroutine.wrap(function()
+    --     local co = coroutine.running()
+    --     for i = 1, 1234567 do
+    --       -- coroutine.resume only gets called once uv.write completes
+    --       fzf_cb("123", function()
+    --         coroutine.resume(co)
+    --       end)
+    --       -- wait here until 'coroutine.resume' is called which only happens
+    --       -- once 'uv.write' completes (i.e. the line was written into fzf)
+    --       -- this frees neovim to respond and open the UI
+    --       coroutine.yield()
+    --     end
+    --     -- signal EOF to fzf and close the named pipe
+    --     -- this also stops the fzf "loading" indicator
+    --     fzf_cb()
+    --   end)()
+    -- end)
+  end)
+end
+
+-- map("n", "<leader>fk", smart_files2, { desc = "Find Buffers", expr = true, silent = true })
+-- smart_files2()
