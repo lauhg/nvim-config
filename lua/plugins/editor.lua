@@ -146,7 +146,7 @@ return {
       },
     },
     keys = {
-      { "s", "<Nop>" },
+      { "s", "<Nop>", mode = { "n", "x", "o" } },
       {
         "f",
         mode = { "n" },
@@ -157,7 +157,15 @@ return {
       },
     },
   },
-
+  {
+    "echasnovski/mini.surround",
+    opts = {
+      mappings = {
+        add = "sa",
+        delete = "sd",
+      },
+    },
+  },
   {
     "gbprod/yanky.nvim",
     event = "VeryLazy",
